@@ -1,0 +1,11 @@
+.ResumeContainer {
+  width: 100%;
+  overflow-y: hidden;
+}
+
+.Resume {
+  margin: 20px auto;
+  border: 1px solid gray;
+  width: 21cm;
+  height: 10.7cm;
+}

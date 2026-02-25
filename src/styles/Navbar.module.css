@@ -1,0 +1,22 @@
+.Navbar {
+  padding: 4px 10px;
+  border-bottom: rgb(0, 0, 0) 2px solid;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+#PrintButton {
+  align-self: center;
+
+  font-size: 14px;
+  font-weight: bold;
+
+  background-color: rgb(218, 218, 218);
+
+  border-radius: 6px;
+  border: 1px solid gray;
+  outline: none;
+
+  cursor: pointer;
+}

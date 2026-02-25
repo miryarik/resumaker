@@ -1,0 +1,10 @@
+.inputs {
+  padding: 20px;
+  width: 620px;
+  border-right: black 2px solid;
+}
+
+main {
+  display: flex;
+  flex-grow: 1;
+}
