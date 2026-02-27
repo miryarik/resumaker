@@ -3,16 +3,17 @@
 
 :root {
   font-family: "Geist Mono";
-}
 
-body {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+  /* sizes */
+  --nav-height: 60px;
+
+  /* borders */
+  --main-border-thickness: 2px;
+  --main-border: black var(--main-border-thickness) solid;
 }
 
 #root {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  height: 100vh;
 }

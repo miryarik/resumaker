@@ -1,7 +1,7 @@
 .inputs {
   padding: 20px;
   width: 620px;
-  border-right: black 2px solid;
+  border-right: var(--main-border);
 }
 
 main {

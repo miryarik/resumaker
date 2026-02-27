@@ -1,13 +1,13 @@
 .Navbar {
   padding: 4px 10px;
-  border-bottom: rgb(0, 0, 0) 2px solid;
-
+  border-bottom: var(--main-border);
+  height: 60px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 #PrintButton {
-  align-self: center;
 
   font-size: 14px;
   font-weight: bold;

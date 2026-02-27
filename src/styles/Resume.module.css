@@ -1,11 +1,56 @@
 .ResumeContainer {
   width: 100%;
-  overflow-y: hidden;
+  height: calc(100vh - var(--nav-height) - var(--main-border-thickness));
+  overflow-y: scroll;
 }
 
 .Resume {
   margin: 20px auto;
-  border: 1px solid gray;
+  padding: 30px;
+  border: 1px solid rgb(199, 199, 199);
+
+  /* A4 sheet sizing : 21 x 29.7 sq. cm */
   width: 21cm;
-  height: 10.7cm;
+  height: 29.7cm;
+}
+
+.Heading {
+  text-align: center;
+}
+
+.FullName {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.Designation {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.LinkInfo,
+.ContactInfo {
+  margin: 2px auto;
+  max-width: 500px;
+  font-size: 10px;
+
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.LinkInfoItem,
+.ContactInfoItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  svg {
+    height: 12px;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 }
