@@ -1,4 +1,5 @@
 import styles from "../styles/Resume.module.css";
+import ResumeHeading from "./ResumeHeading";
 
 const Resume = ({
     fullName,
@@ -8,6 +9,7 @@ const Resume = ({
     email,
     github,
     linkedin,
+    summary,
 }) => {
     const contactInfo = [
         {
@@ -111,40 +113,16 @@ const Resume = ({
     return (
         <div className={styles.ResumeContainer}>
             <div className={styles.Resume}>
-                <div className={styles.Heading}>
-                    <h2 className={styles.FullName}>{fullName}</h2>
-                    <h3 className={styles.Designation}>{designation}</h3>
-                    <div className={styles.ContactInfo}>
-                        {contactInfo.map(
-                            (item, idx) =>
-                                item.value && (
-                                    <div className={styles.ContactInfoItem}>
-                                        {item.icon}
-                                        {item.value}
-                                        {contactInfo[idx + 1]?.value &&
-                                            idx != contactInfo.length - 1 && (
-                                                <Separator />
-                                            )}
-                                    </div>
-                                ),
-                        )}
-                    </div>
-                    <div className={styles.LinkInfo}>
-                        {linkInfo.map(
-                            (item, idx) =>
-                                item.value && (
-                                    <div className={styles.LinkInfoItem}>
-                                        {item.icon}
-                                        <a href={item.value}>{item.label}</a>
+                <ResumeHeading
+                    fullName={fullName}
+                    designation={designation}
+                    contactInfo={contactInfo}
+                    linkInfo={linkInfo}
+                />
 
-                                        {linkInfo[idx + 1]?.value &&
-                                            idx != linkInfo.length - 1 && (
-                                                <Separator />
-                                            )}
-                                    </div>
-                                ),
-                        )}
-                    </div>
+                <div className={styles.Summary}>
+                    <h4>Summary</h4>
+                    <p>{summary}</p>
                 </div>
             </div>
         </div>
@@ -152,15 +130,3 @@ const Resume = ({
 };
 
 export default Resume;
-
-function Separator() {
-    return (
-        <span
-            style={{
-                margin: "0 4px",
-            }}
-        >
-            {" | "}
-        </span>
-    );
-}
