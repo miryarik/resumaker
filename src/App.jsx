@@ -4,6 +4,7 @@ import InputField from "./components/InputField";
 import InputGroup from "./components/InputGroup";
 import { Navbar } from "./components/Navbar";
 import Resume from "./components/Resume";
+import TextField from "./components/TextField";
 
 function App() {
     const [fullName, setFullName] = useState("");
@@ -13,6 +14,7 @@ function App() {
     const [email, setEmail] = useState("");
     const [github, setGithub] = useState("");
     const [linkedin, setLinkedin] = useState("");
+    const [summary, setSummary] = useState("");
 
     return (
         <>
@@ -83,6 +85,16 @@ function App() {
                             setValue={setLinkedin}
                         />
                     </InputGroup>
+
+                    <TextField
+                        label={"Summary"}
+                        id={"summary"}
+                        placeholder={
+                            "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maxime optio maiores hic aut est consequatur eius quisquam iusto blanditiis voluptatem."
+                        }
+                        value={summary}
+                        setValue={setSummary}
+                    />
                 </div>
                 <Resume
                     fullName={fullName}
@@ -92,6 +104,7 @@ function App() {
                     email={email}
                     github={github}
                     linkedin={linkedin}
+                    summary={summary}
                 />
             </main>
         </>

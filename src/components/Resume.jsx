@@ -120,10 +120,12 @@ const Resume = ({
                     linkInfo={linkInfo}
                 />
 
-                <div className={styles.Summary}>
-                    <h4>Summary</h4>
-                    <p>{summary}</p>
-                </div>
+                {summary && (
+                    <div className={styles.Summary}>
+                        <h4>Summary</h4>
+                        <p>{summary}</p>
+                    </div>
+                )}
             </div>
         </div>
     );
