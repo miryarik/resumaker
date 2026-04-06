@@ -28,3 +28,24 @@
     font-size: 12px;
   }
 }
+
+.Education {
+  margin: 14px auto;
+
+  h4 {
+    letter-spacing: 1px;
+    border-bottom: solid 1px black;
+  }
+
+  p {
+    margin-top: 8px;
+    font-size: 12px;
+  }
+
+  .Top,
+  .Bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+}

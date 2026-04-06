@@ -10,6 +10,7 @@ const Resume = ({
     github,
     linkedin,
     summary,
+    education,
 }) => {
     const contactInfo = [
         {
@@ -124,6 +125,20 @@ const Resume = ({
                     <div className={styles.Summary}>
                         <h4>Summary</h4>
                         <p>{summary}</p>
+                    </div>
+                )}
+
+                {education.institute && (
+                    <div className={styles.Education}>
+                        <h4>Education</h4>
+                        <div className={styles.Top}>
+                            <h5>{education.institute}</h5>
+                            <p>{education.date}</p>
+                        </div>
+                        <div className={styles.Bottom}>
+                            <p>{education.course}</p>
+                            <p>{education.score}</p>
+                        </div>
                     </div>
                 )}
             </div>
