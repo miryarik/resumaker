@@ -1,16 +1,20 @@
 .TextField {
+    margin-bottom: var(--mid-margin);
 
     .Label {
-        font-size: 14px;
+        font-size: var(--input-fs);
         margin-left: 6px;
-        color: rgb(50, 50, 50);
+        color: white;
     }
 
     textarea {
         width: 100%;
-        font-size: 14px;
-        padding: 2px 6px;
-        border: rgb(50, 50, 50) 1px solid;
+        font-size: var(--input-fs);
+        padding: var(--input-padding);
+        margin-bottom: var(--mid-margin);
+        background-color: var(--input-bg);
+        border: var(--input-border);
+        color: white;
         border-radius: 6px;
         outline: none;
         resize: none;

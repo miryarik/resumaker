@@ -1,5 +1,15 @@
 import styles from "../styles/Resume.module.css";
+import { getBullets } from "../utils";
 import ResumeHeading from "./ResumeHeading";
+import {
+    Content,
+    Heading,
+    ResumeSection,
+    Side,
+    SubHeading,
+} from "./ResumeSection";
+
+getBullets;
 
 const Resume = ({
     fullName,
@@ -11,6 +21,8 @@ const Resume = ({
     linkedin,
     summary,
     education,
+    skills,
+    experience,
 }) => {
     const contactInfo = [
         {
@@ -122,24 +134,67 @@ const Resume = ({
                 />
 
                 {summary && (
-                    <div className={styles.Summary}>
-                        <h4>Summary</h4>
-                        <p>{summary}</p>
-                    </div>
+                    <ResumeSection>
+                        <Heading>Summary</Heading>
+                        <Content>
+                            <p>{summary}</p>
+                        </Content>
+                    </ResumeSection>
                 )}
 
                 {education.institute && (
-                    <div className={styles.Education}>
-                        <h4>Education</h4>
-                        <div className={styles.Top}>
-                            <h5>{education.institute}</h5>
-                            <p>{education.date}</p>
-                        </div>
-                        <div className={styles.Bottom}>
-                            <p>{education.course}</p>
-                            <p>{education.score}</p>
-                        </div>
-                    </div>
+                    <ResumeSection>
+                        <Heading>Education</Heading>
+                        <Content>
+                            <SubHeading>{education.course}</SubHeading>
+                            <p>{education.institute}</p>
+                            <Side>
+                                <p>
+                                    {education.from} - {education.to}
+                                </p>
+                                <p>Score: {education.score}</p>
+                            </Side>
+                        </Content>
+                    </ResumeSection>
+                )}
+
+                {skills && (
+                    <ResumeSection>
+                        <Heading>Techinal Skills</Heading>
+                        <Content>
+                            {skills.map((skill) => (
+                                <p>
+                                    <strong>{skill.label}:</strong>{" "}
+                                    {skill.items}
+                                </p>
+                            ))}
+                        </Content>
+                    </ResumeSection>
+                )}
+
+                {experience && (
+                    <ResumeSection>
+                        <Heading>Experience</Heading>
+                        <Content>
+                            {experience.map((exp) => (
+                                <>
+                                    <SubHeading>{exp.designation}</SubHeading>
+                                    <p>{exp.company}</p>
+                                    <ul>
+                                        {getBullets(exp.content).map((item) => (
+                                            <li>{item}</li>
+                                        ))}
+                                    </ul>
+                                    <Side>
+                                        <p>
+                                            {exp.from} - {exp.to}
+                                        </p>
+                                        <p>{exp.mode}</p>
+                                    </Side>
+                                </>
+                            ))}
+                        </Content>
+                    </ResumeSection>
                 )}
             </div>
         </div>

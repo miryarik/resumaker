@@ -1,10 +1,10 @@
-import { useState } from "react";
 import "./App.css";
+import { Fragment, useState } from "react";
 import InputField from "./components/InputField";
 import InputGroup from "./components/InputGroup";
-import { Navbar } from "./components/Navbar";
-import Resume from "./components/Resume";
 import TextField from "./components/TextField";
+import Navbar from "./components/Navbar";
+import Resume from "./components/Resume";
 
 function App() {
     const [fullName, setFullName] = useState("");
@@ -18,15 +18,60 @@ function App() {
     const [education, setEducation] = useState({
         institute: "",
         course: "",
-        date: "",
+        from: "",
+        to: "",
         score: "",
     });
+
+    const [skills, setSkills] = useState([
+        {
+            label: "Languages",
+            items: "",
+        },
+        {
+            label: "Tools & Technologies",
+            items: "",
+        },
+        {
+            label: "Concepts",
+            items: "",
+        },
+    ]);
+
+    const [experience, setExperience] = useState([
+        {
+            company: "",
+            designation: "",
+            mode: "",
+            from: "",
+            to: "",
+            content: "",
+        },
+    ]);
+
+    function addNewExpField() {
+        // create new blank experience object in state
+        // to add a new controlled input
+
+        const newExp = [...experience];
+        newExp.push({
+            company: "",
+            designation: "",
+            mode: "",
+            from: "",
+            to: "",
+            content: "",
+        });
+
+        setExperience(newExp);
+    }
 
     return (
         <>
             <Navbar />
             <main>
                 <div className="inputs">
+                    <h3>Basic Information</h3>
                     <InputGroup>
                         <InputField
                             type={"text"}
@@ -72,7 +117,9 @@ function App() {
                             value={email}
                             setValue={setEmail}
                         />
+                    </InputGroup>
 
+                    <InputGroup>
                         <InputField
                             type={"text"}
                             label={"GitHub"}
@@ -102,6 +149,7 @@ function App() {
                         setValue={setSummary}
                     />
 
+                    <h3>Education</h3>
                     <InputGroup>
                         <InputField
                             type={"text"}
@@ -135,14 +183,28 @@ function App() {
                     <InputGroup>
                         <InputField
                             type={"text"}
-                            label={"From - To"}
-                            id={"date"}
-                            placeholder={"Feb 2000 - Jan 2024"}
-                            value={education.date}
+                            label={"From"}
+                            id={"education-from"}
+                            placeholder={"Feb 2000"}
+                            value={education.from}
                             onChange={(e) => {
                                 const newState = {
                                     ...education,
-                                    date: e.target.value,
+                                    from: e.target.value,
+                                };
+                                setEducation(newState);
+                            }}
+                        />
+                        <InputField
+                            type={"text"}
+                            label={"To"}
+                            id={"education-to"}
+                            placeholder={"Feb 2022"}
+                            value={education.to}
+                            onChange={(e) => {
+                                const newState = {
+                                    ...education,
+                                    to: e.target.value,
                                 };
                                 setEducation(newState);
                             }}
@@ -162,6 +224,99 @@ function App() {
                             }}
                         />
                     </InputGroup>
+
+                    <h3>Skills and Technologies</h3>
+                    {skills.map((section, idx) => (
+                        <TextField
+                            rows={2}
+                            key={idx}
+                            label={section.label}
+                            value={section.items}
+                            onChange={(e) => {
+                                const newSkills = [...skills];
+                                newSkills[idx].items = e.target.value;
+                                setSkills(newSkills);
+                            }}
+                        />
+                    ))}
+
+                    <h3>Experience</h3>
+                    {experience.map((exp, idx) => (
+                        <Fragment key={idx}>
+                            <InputGroup>
+                                <InputField
+                                    type={"text"}
+                                    label={"Company Name"}
+                                    placeholder={"No Company"}
+                                    value={exp.company}
+                                    onChange={(e) => {
+                                        const newExp = [...experience];
+                                        newExp[idx].company = e.target.value;
+                                        setExperience(newExp);
+                                    }}
+                                />
+                                <InputField
+                                    type={"text"}
+                                    label={"Designation"}
+                                    placeholder={"Nothing Developer"}
+                                    value={exp.designation}
+                                    onChange={(e) => {
+                                        const newExp = [...experience];
+                                        newExp[idx].designation =
+                                            e.target.value;
+                                        setExperience(newExp);
+                                    }}
+                                />
+                            </InputGroup>
+                            <InputGroup>
+                                <InputField
+                                    type={"text"}
+                                    label={"Mode"}
+                                    placeholder={"Remote"}
+                                    value={exp.mode}
+                                    onChange={(e) => {
+                                        const newExp = [...experience];
+                                        newExp[idx].mode = e.target.value;
+                                        setExperience(newExp);
+                                    }}
+                                />
+                                <InputField
+                                    type={"text"}
+                                    label={"From"}
+                                    placeholder={"Dec 2025"}
+                                    value={exp.from}
+                                    onChange={(e) => {
+                                        const newExp = [...experience];
+                                        newExp[idx].from = e.target.value;
+                                        setExperience(newExp);
+                                    }}
+                                />
+                                <InputField
+                                    type={"text"}
+                                    label={"To"}
+                                    placeholder={"Present"}
+                                    value={exp.to}
+                                    onChange={(e) => {
+                                        const newExp = [...experience];
+                                        newExp[idx].to = e.target.value;
+                                        setExperience(newExp);
+                                    }}
+                                />
+                            </InputGroup>
+                            <TextField
+                                label={"Details"}
+                                rows={4}
+                                value={exp.content}
+                                onChange={(e) => {
+                                    const newExp = [...experience];
+                                    newExp[idx].content = e.target.value;
+                                    setExperience(newExp);
+                                }}
+                            />
+                        </Fragment>
+                    ))}
+
+                    <button onClick={addNewExpField}>Add Experience</button>
                 </div>
                 <Resume
                     fullName={fullName}
@@ -173,6 +328,8 @@ function App() {
                     linkedin={linkedin}
                     summary={summary}
                     education={education}
+                    skills={skills}
+                    experience={experience}
                 />
             </main>
         </>

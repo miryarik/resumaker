@@ -1,6 +1,7 @@
 .InputGroup {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
-  margin-bottom: 30px;
+  margin-bottom: var(--mid-margin);
 }

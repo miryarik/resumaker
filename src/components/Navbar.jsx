@@ -1,5 +1,6 @@
 import styles from "../styles/Navbar.module.css";
-export const Navbar = () => {
+
+const Navbar = () => {
     return (
         <nav className={styles.Navbar}>
             <h1>Resumaker</h1>
@@ -7,3 +8,5 @@ export const Navbar = () => {
         </nav>
     );
 };
+
+export default Navbar;

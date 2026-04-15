@@ -5,6 +5,7 @@
 }
 
 .Resume {
+  background-color: white;
   margin: 20px auto;
   padding: 30px;
   border: 1px solid rgb(199, 199, 199);
@@ -14,38 +15,31 @@
   height: 29.7cm;
 }
 
+.ResumeSection {
+  .Content {
+    position: relative;
 
-.Summary {
-  margin: 14px auto;
+    padding-left: var(--mid-space);
 
-  h4 {
-    letter-spacing: 1px;
-    border-bottom: solid 1px black;
+    .Side {
+      position: absolute;
+      top: 0;
+      right: 0;
+      text-align: right;
+    }
+
   }
 
-  p {
-    margin-top: 8px;
+  .Heading {
+    border-bottom: solid 1px black;
+    margin-top: var(--mid-space);
+    margin-bottom: var(--mid-space)
+  }
+
+  p,
+  ul,
+  li {
     font-size: 12px;
   }
-}
 
-.Education {
-  margin: 14px auto;
-
-  h4 {
-    letter-spacing: 1px;
-    border-bottom: solid 1px black;
-  }
-
-  p {
-    margin-top: 8px;
-    font-size: 12px;
-  }
-
-  .Top,
-  .Bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-  }
 }
