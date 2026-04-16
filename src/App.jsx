@@ -15,13 +15,15 @@ function App() {
     const [github, setGithub] = useState("");
     const [linkedin, setLinkedin] = useState("");
     const [summary, setSummary] = useState("");
-    const [education, setEducation] = useState({
-        institute: "",
-        course: "",
-        from: "",
-        to: "",
-        score: "",
-    });
+    const [educations, setEducations] = useState([
+        {
+            institute: "",
+            course: "",
+            from: "",
+            to: "",
+            score: "",
+        },
+    ]);
 
     const [skills, setSkills] = useState([
         {
@@ -49,6 +51,16 @@ function App() {
         },
     ]);
 
+    const [projects, setProjects] = useState([
+        {
+            name: "",
+            tools: "",
+            link: "",
+            github: "",
+            content: "",
+        },
+    ]);
+
     function addNewExpField() {
         // create new blank experience object in state
         // to add a new controlled input
@@ -64,6 +76,50 @@ function App() {
         });
 
         setExperience(newExp);
+    }
+
+    function addNewProjectsField() {
+        // create new blank project object in state
+        // to add a new controlled input
+
+        const newProjects = [...projects];
+        newProjects.push({
+            name: "",
+            tools: "",
+            link: "",
+            github: "",
+            content: "",
+        });
+
+        setProjects(newProjects);
+    }
+
+    function addNewEducation() {
+        // create new blank education object in state
+        // to add a new controlled input
+
+        const newEducations = [...educations];
+        newEducations.push({
+            institute: "",
+            course: "",
+            from: "",
+            to: "",
+            score: "",
+        });
+
+        setEducations(newEducations);
+    }
+
+    function deleteEducation(idx) {
+        const newEducations = [...educations];
+        if (newEducations.length > 1) newEducations.splice(idx, 1);
+        setEducations(newEducations);
+    }
+
+    function deleteExperience(idx) {
+        const newExperience = [...experience];
+        if (newExperience.length > 1) newExperience.splice(idx, 1);
+        setExperience(newExperience);
     }
 
     return (
@@ -150,80 +206,83 @@ function App() {
                     />
 
                     <h3>Education</h3>
-                    <InputGroup>
-                        <InputField
-                            type={"text"}
-                            label={"Institue"}
-                            id={"institure"}
-                            placeholder={"University of Nowhere"}
-                            value={education.institute}
-                            onChange={(e) => {
-                                const newState = {
-                                    ...education,
-                                    institute: e.target.value,
-                                };
-                                setEducation(newState);
-                            }}
-                        />
-                        <InputField
-                            type={"text"}
-                            label={"Course"}
-                            id={"course"}
-                            placeholder={"Masters of Nothing"}
-                            value={education.course}
-                            onChange={(e) => {
-                                const newState = {
-                                    ...education,
-                                    course: e.target.value,
-                                };
-                                setEducation(newState);
-                            }}
-                        />
-                    </InputGroup>
-                    <InputGroup>
-                        <InputField
-                            type={"text"}
-                            label={"From"}
-                            id={"education-from"}
-                            placeholder={"Feb 2000"}
-                            value={education.from}
-                            onChange={(e) => {
-                                const newState = {
-                                    ...education,
-                                    from: e.target.value,
-                                };
-                                setEducation(newState);
-                            }}
-                        />
-                        <InputField
-                            type={"text"}
-                            label={"To"}
-                            id={"education-to"}
-                            placeholder={"Feb 2022"}
-                            value={education.to}
-                            onChange={(e) => {
-                                const newState = {
-                                    ...education,
-                                    to: e.target.value,
-                                };
-                                setEducation(newState);
-                            }}
-                        />
-                        <InputField
-                            type={"text"}
-                            label={"Score"}
-                            id={"score"}
-                            placeholder={"7.2 / 10"}
-                            value={education.score}
-                            onChange={(e) => {
-                                const newState = {
-                                    ...education,
-                                    score: e.target.value,
-                                };
-                                setEducation(newState);
-                            }}
-                        />
-                    </InputGroup>
+                    {educations.map((education, idx) => (
+                        <Fragment key={idx}>
+                            <button onClick={() => deleteEducation(idx)}>
+                                Delete
+                            </button>
+                            <InputGroup>
+                                <InputField
+                                    type={"text"}
+                                    label={"Institue"}
+                                    id={"institure"}
+                                    placeholder={"University of Nowhere"}
+                                    value={education.institute}
+                                    onChange={(e) => {
+                                        const newEducations = [...educations];
+                                        newEducations[idx].institute =
+                                            e.target.value;
+                                        setEducations(newEducations);
+                                    }}
+                                />
+                                <InputField
+                                    type={"text"}
+                                    label={"Course"}
+                                    id={"course"}
+                                    placeholder={"Masters of Nothing"}
+                                    value={education.course}
+                                    onChange={(e) => {
+                                        const newEducations = [...educations];
+                                        newEducations[idx].course =
+                                            e.target.value;
+                                        setEducations(newEducations);
+                                    }}
+                                />
+                            </InputGroup>
+                            <InputGroup>
+                                <InputField
+                                    type={"text"}
+                                    label={"From"}
+                                    id={"education-from"}
+                                    placeholder={"Feb 2000"}
+                                    value={education.from}
+                                    onChange={(e) => {
+                                        const newEducations = [...educations];
+                                        newEducations[idx].from =
+                                            e.target.value;
+                                        setEducations(newEducations);
+                                    }}
+                                />
+                                <InputField
+                                    type={"text"}
+                                    label={"To"}
+                                    id={"education-to"}
+                                    placeholder={"Feb 2022"}
+                                    value={education.to}
+                                    onChange={(e) => {
+                                        const newEducations = [...educations];
+                                        newEducations[idx].to = e.target.value;
+                                        setEducations(newEducations);
+                                    }}
+                                />
+                                <InputField
+                                    type={"text"}
+                                    label={"Score"}
+                                    id={"score"}
+                                    placeholder={"7.2 / 10"}
+                                    value={education.score}
+                                    onChange={(e) => {
+                                        const newEducations = [...educations];
+                                        newEducations[idx].score =
+                                            e.target.value;
+                                        setEducations(newEducations);
+                                    }}
+                                />
+                            </InputGroup>
+                        </Fragment>
+                    ))}
+
+                    <button onClick={addNewEducation}>Add Education</button>
 
                     <h3>Skills and Technologies</h3>
                     {skills.map((section, idx) => (
@@ -243,6 +302,9 @@ function App() {
                     <h3>Experience</h3>
                     {experience.map((exp, idx) => (
                         <Fragment key={idx}>
+                            <button onClick={() => deleteExperience(idx)}>
+                                Delete Experience
+                            </button>
                             <InputGroup>
                                 <InputField
                                     type={"text"}
@@ -317,6 +379,73 @@ function App() {
                     ))}
 
                     <button onClick={addNewExpField}>Add Experience</button>
+
+                    <h3>Projects</h3>
+                    {projects.map((project, idx) => (
+                        <Fragment key={idx}>
+                            <InputGroup>
+                                <InputField
+                                    type={"text"}
+                                    label={"Name"}
+                                    placeholder={"Uncool Name"}
+                                    value={project.name}
+                                    onChange={(e) => {
+                                        const newProjects = [...projects];
+                                        newProjects[idx].name = e.target.value;
+                                        setProjects(newProjects);
+                                    }}
+                                />
+                                <InputField
+                                    type={"text"}
+                                    label={"Tools"}
+                                    placeholder={"Some uncool tools"}
+                                    value={project.tools}
+                                    onChange={(e) => {
+                                        const newProjects = [...projects];
+                                        newProjects[idx].tools = e.target.value;
+                                        setProjects(newProjects);
+                                    }}
+                                />
+                            </InputGroup>
+                            <InputGroup>
+                                <InputField
+                                    type={"text"}
+                                    label={"Link"}
+                                    placeholder={"Live Link"}
+                                    value={project.link}
+                                    onChange={(e) => {
+                                        const newProjects = [...projects];
+                                        newProjects[idx].link = e.target.value;
+                                        setProjects(newProjects);
+                                    }}
+                                />
+                                <InputField
+                                    type={"text"}
+                                    label={"GitHub"}
+                                    placeholder={"GitHub Repo Link"}
+                                    value={project.github}
+                                    onChange={(e) => {
+                                        const newProjects = [...projects];
+                                        newProjects[idx].github =
+                                            e.target.value;
+                                        setProjects(newProjects);
+                                    }}
+                                />
+                            </InputGroup>
+                            <TextField
+                                label={"Details"}
+                                rows={4}
+                                value={project.content}
+                                onChange={(e) => {
+                                    const newProjects = [...projects];
+                                    newProjects[idx].content = e.target.value;
+                                    setProjects(newProjects);
+                                }}
+                            />
+                        </Fragment>
+                    ))}
+
+                    <button onClick={addNewProjectsField}>Add Project</button>
                 </div>
                 <Resume
                     fullName={fullName}
@@ -327,9 +456,10 @@ function App() {
                     github={github}
                     linkedin={linkedin}
                     summary={summary}
-                    education={education}
+                    educations={educations}
                     skills={skills}
                     experience={experience}
+                    projects={projects}
                 />
             </main>
         </>

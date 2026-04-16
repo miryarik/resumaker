@@ -1,8 +1,10 @@
 @import url('./styles/modern-reset.css');
 @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap');
 
 :root {
-  font-family: "Geist Mono";
+  /* font-family: "Geist Mono"; */
+  font-family: "DM Mono";
 
   /* sizes */
   --nav-height: 60px;
@@ -32,4 +34,15 @@
   background-color: rgb(34, 34, 34);
   scrollbar-color: gray rgb(62, 62, 62);
   scrollbar-width: thin;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+}
+
+@page {
+  size: A4;
+  margin: 0;
 }

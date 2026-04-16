@@ -13,13 +13,19 @@
   /* A4 sheet sizing : 21 x 29.7 sq. cm */
   width: 21cm;
   height: 29.7cm;
+
+  h3 {
+    color: black;
+  }
 }
 
 .ResumeSection {
   .Content {
-    position: relative;
-
     padding-left: var(--mid-space);
+
+    >div {
+      position: relative;
+    }
 
     .Side {
       position: absolute;
@@ -42,4 +48,22 @@
     font-size: 12px;
   }
 
+}
+
+@media print {
+
+  .Resume,
+  .Resume * {
+    visibility: visible;
+  }
+
+  .Resume {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 21cm;
+    height: 29.7cm;
+    /* padding: 0; */
+    margin: 0;
+  }
 }

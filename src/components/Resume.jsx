@@ -20,9 +20,10 @@ const Resume = ({
     github,
     linkedin,
     summary,
-    education,
+    educations,
     skills,
     experience,
+    projects,
 }) => {
     const contactInfo = [
         {
@@ -142,28 +143,32 @@ const Resume = ({
                     </ResumeSection>
                 )}
 
-                {education.institute && (
+                {educations[0].institute && (
                     <ResumeSection>
                         <Heading>Education</Heading>
                         <Content>
-                            <SubHeading>{education.course}</SubHeading>
-                            <p>{education.institute}</p>
-                            <Side>
-                                <p>
-                                    {education.from} - {education.to}
-                                </p>
-                                <p>Score: {education.score}</p>
-                            </Side>
+                            {educations.map((education, idx) => (
+                                <div key={idx}>
+                                    <SubHeading>{education.course}</SubHeading>
+                                    <p>{education.institute}</p>
+                                    <Side>
+                                        <p>
+                                            {education.from} - {education.to}
+                                        </p>
+                                        <p>Score: {education.score}</p>
+                                    </Side>
+                                </div>
+                            ))}
                         </Content>
                     </ResumeSection>
                 )}
 
-                {skills && (
+                {(skills[0].items || skills[1].items || skills[2].items) && (
                     <ResumeSection>
                         <Heading>Techinal Skills</Heading>
                         <Content>
-                            {skills.map((skill) => (
-                                <p>
+                            {skills.map((skill, idx) => (
+                                <p key={idx}>
                                     <strong>{skill.label}:</strong>{" "}
                                     {skill.items}
                                 </p>
@@ -172,18 +177,20 @@ const Resume = ({
                     </ResumeSection>
                 )}
 
-                {experience && (
+                {experience[0].company && (
                     <ResumeSection>
                         <Heading>Experience</Heading>
                         <Content>
-                            {experience.map((exp) => (
-                                <>
+                            {experience.map((exp, idx) => (
+                                <div key={idx}>
                                     <SubHeading>{exp.designation}</SubHeading>
                                     <p>{exp.company}</p>
                                     <ul>
-                                        {getBullets(exp.content).map((item) => (
-                                            <li>{item}</li>
-                                        ))}
+                                        {getBullets(exp.content).map(
+                                            (item, idx) => (
+                                                <li key={idx}>{item}</li>
+                                            ),
+                                        )}
                                     </ul>
                                     <Side>
                                         <p>
@@ -191,7 +198,32 @@ const Resume = ({
                                         </p>
                                         <p>{exp.mode}</p>
                                     </Side>
-                                </>
+                                </div>
+                            ))}
+                        </Content>
+                    </ResumeSection>
+                )}
+
+                {projects[0].name && (
+                    <ResumeSection>
+                        <Heading>Projects</Heading>
+                        <Content>
+                            {projects.map((project, idx) => (
+                                <div key={idx}>
+                                    <SubHeading>{project.name}</SubHeading>
+                                    <p>{project.tools}</p>
+                                    <ul>
+                                        {getBullets(project.content).map(
+                                            (item, idx) => (
+                                                <li key={idx}>{item}</li>
+                                            ),
+                                        )}
+                                    </ul>
+                                    <Side>
+                                        <p>{project.link}</p>
+                                        <p>{project.github}</p>
+                                    </Side>
+                                </div>
                             ))}
                         </Content>
                     </ResumeSection>
