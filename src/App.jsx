@@ -1,10 +1,14 @@
 import "./App.css";
-import { Fragment, useState } from "react";
-import InputField from "./components/InputField";
-import InputGroup from "./components/InputGroup";
-import TextField from "./components/TextField";
+import { useState } from "react";
 import Navbar from "./components/Navbar";
 import Resume from "./components/Resume";
+import BasicInformation from "./components/BasicInformation";
+import { Education } from "./components/Education";
+import Skills from "./components/Skills";
+import { Experience } from "./components/Experience";
+import Projects from "./components/Projects";
+
+const inputTabs = ["basic", "education", "skills", "experience", "projects"];
 
 function App() {
     const [fullName, setFullName] = useState("");
@@ -15,6 +19,41 @@ function App() {
     const [github, setGithub] = useState("");
     const [linkedin, setLinkedin] = useState("");
     const [summary, setSummary] = useState("");
+    const basicInfoStates = {
+        fullName: {
+            value: fullName,
+            set: setFullName,
+        },
+        designation: {
+            value: designation,
+            set: setDesignation,
+        },
+        location: {
+            value: location,
+            set: setLocation,
+        },
+        phone: {
+            value: phone,
+            set: setPhone,
+        },
+        email: {
+            value: email,
+            set: setEmail,
+        },
+        github: {
+            value: github,
+            set: setGithub,
+        },
+        linkedin: {
+            value: linkedin,
+            set: setLinkedin,
+        },
+        summary: {
+            value: summary,
+            set: setSummary,
+        },
+    };
+
     const [educations, setEducations] = useState([
         {
             institute: "",
@@ -60,6 +99,8 @@ function App() {
             content: "",
         },
     ]);
+
+    const [activeTab, setActiveTab] = useState("basic");
 
     function addNewExpField() {
         // create new blank experience object in state
@@ -127,325 +168,53 @@ function App() {
             <Navbar />
             <main>
                 <div className="inputs">
-                    <h3>Basic Information</h3>
-                    <InputGroup>
-                        <InputField
-                            type={"text"}
-                            label={"Full Name"}
-                            id={"name"}
-                            placeholder={"John Doe"}
-                            value={fullName}
-                            setValue={setFullName}
-                        />
-                        <InputField
-                            type={"text"}
-                            label={"Designation"}
-                            id={"designation"}
-                            placeholder={"Senior Web Engineer"}
-                            value={designation}
-                            setValue={setDesignation}
-                        />
-                    </InputGroup>
-
-                    <InputGroup>
-                        <InputField
-                            type={"text"}
-                            label={"Location"}
-                            id={"location"}
-                            placeholder={"Silicon Valley"}
-                            value={location}
-                            setValue={setLocation}
-                        />
-                        <InputField
-                            type={"tel"}
-                            label={"Phone"}
-                            id={"phone"}
-                            placeholder={"+91-XXXX-XXXX-XX"}
-                            value={phone}
-                            setValue={setPhone}
-                        />
-
-                        <InputField
-                            type={"email"}
-                            label={"Email"}
-                            id={"email"}
-                            placeholder={"johnny@company.com"}
-                            value={email}
-                            setValue={setEmail}
-                        />
-                    </InputGroup>
-
-                    <InputGroup>
-                        <InputField
-                            type={"text"}
-                            label={"GitHub"}
-                            id={"github"}
-                            placeholder={"github.com/john"}
-                            value={github}
-                            setValue={setGithub}
-                        />
-
-                        <InputField
-                            type={"text"}
-                            label={"LinkedIn"}
-                            id={"linkedin"}
-                            placeholder={"linkedin.com/in/john"}
-                            value={linkedin}
-                            setValue={setLinkedin}
-                        />
-                    </InputGroup>
-
-                    <TextField
-                        label={"Summary"}
-                        id={"summary"}
-                        placeholder={
-                            "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maxime optio maiores hic aut est consequatur eius quisquam iusto blanditiis voluptatem."
-                        }
-                        value={summary}
-                        setValue={setSummary}
-                    />
-
-                    <h3>Education</h3>
-                    {educations.map((education, idx) => (
-                        <Fragment key={idx}>
-                            <button onClick={() => deleteEducation(idx)}>
-                                Delete
+                    <div className="input-tabs">
+                        {inputTabs.map((tab) => (
+                            <button
+                                key={tab}
+                                className={activeTab == tab ? "active" : ""}
+                                onClick={() => setActiveTab(tab)}
+                            >
+                                {tab[0].toUpperCase() + tab.slice(1)}
                             </button>
-                            <InputGroup>
-                                <InputField
-                                    type={"text"}
-                                    label={"Institue"}
-                                    id={"institure"}
-                                    placeholder={"University of Nowhere"}
-                                    value={education.institute}
-                                    onChange={(e) => {
-                                        const newEducations = [...educations];
-                                        newEducations[idx].institute =
-                                            e.target.value;
-                                        setEducations(newEducations);
-                                    }}
-                                />
-                                <InputField
-                                    type={"text"}
-                                    label={"Course"}
-                                    id={"course"}
-                                    placeholder={"Masters of Nothing"}
-                                    value={education.course}
-                                    onChange={(e) => {
-                                        const newEducations = [...educations];
-                                        newEducations[idx].course =
-                                            e.target.value;
-                                        setEducations(newEducations);
-                                    }}
-                                />
-                            </InputGroup>
-                            <InputGroup>
-                                <InputField
-                                    type={"text"}
-                                    label={"From"}
-                                    id={"education-from"}
-                                    placeholder={"Feb 2000"}
-                                    value={education.from}
-                                    onChange={(e) => {
-                                        const newEducations = [...educations];
-                                        newEducations[idx].from =
-                                            e.target.value;
-                                        setEducations(newEducations);
-                                    }}
-                                />
-                                <InputField
-                                    type={"text"}
-                                    label={"To"}
-                                    id={"education-to"}
-                                    placeholder={"Feb 2022"}
-                                    value={education.to}
-                                    onChange={(e) => {
-                                        const newEducations = [...educations];
-                                        newEducations[idx].to = e.target.value;
-                                        setEducations(newEducations);
-                                    }}
-                                />
-                                <InputField
-                                    type={"text"}
-                                    label={"Score"}
-                                    id={"score"}
-                                    placeholder={"7.2 / 10"}
-                                    value={education.score}
-                                    onChange={(e) => {
-                                        const newEducations = [...educations];
-                                        newEducations[idx].score =
-                                            e.target.value;
-                                        setEducations(newEducations);
-                                    }}
-                                />
-                            </InputGroup>
-                        </Fragment>
-                    ))}
+                        ))}
+                    </div>
 
-                    <button onClick={addNewEducation}>Add Education</button>
-
-                    <h3>Skills and Technologies</h3>
-                    {skills.map((section, idx) => (
-                        <TextField
-                            rows={2}
-                            key={idx}
-                            label={section.label}
-                            value={section.items}
-                            onChange={(e) => {
-                                const newSkills = [...skills];
-                                newSkills[idx].items = e.target.value;
-                                setSkills(newSkills);
-                            }}
+                    <div className="input-fields">
+                        <BasicInformation
+                            isActive={activeTab == "basic"}
+                            state={basicInfoStates}
                         />
-                    ))}
 
-                    <h3>Experience</h3>
-                    {experience.map((exp, idx) => (
-                        <Fragment key={idx}>
-                            <button onClick={() => deleteExperience(idx)}>
-                                Delete Experience
-                            </button>
-                            <InputGroup>
-                                <InputField
-                                    type={"text"}
-                                    label={"Company Name"}
-                                    placeholder={"No Company"}
-                                    value={exp.company}
-                                    onChange={(e) => {
-                                        const newExp = [...experience];
-                                        newExp[idx].company = e.target.value;
-                                        setExperience(newExp);
-                                    }}
-                                />
-                                <InputField
-                                    type={"text"}
-                                    label={"Designation"}
-                                    placeholder={"Nothing Developer"}
-                                    value={exp.designation}
-                                    onChange={(e) => {
-                                        const newExp = [...experience];
-                                        newExp[idx].designation =
-                                            e.target.value;
-                                        setExperience(newExp);
-                                    }}
-                                />
-                            </InputGroup>
-                            <InputGroup>
-                                <InputField
-                                    type={"text"}
-                                    label={"Mode"}
-                                    placeholder={"Remote"}
-                                    value={exp.mode}
-                                    onChange={(e) => {
-                                        const newExp = [...experience];
-                                        newExp[idx].mode = e.target.value;
-                                        setExperience(newExp);
-                                    }}
-                                />
-                                <InputField
-                                    type={"text"}
-                                    label={"From"}
-                                    placeholder={"Dec 2025"}
-                                    value={exp.from}
-                                    onChange={(e) => {
-                                        const newExp = [...experience];
-                                        newExp[idx].from = e.target.value;
-                                        setExperience(newExp);
-                                    }}
-                                />
-                                <InputField
-                                    type={"text"}
-                                    label={"To"}
-                                    placeholder={"Present"}
-                                    value={exp.to}
-                                    onChange={(e) => {
-                                        const newExp = [...experience];
-                                        newExp[idx].to = e.target.value;
-                                        setExperience(newExp);
-                                    }}
-                                />
-                            </InputGroup>
-                            <TextField
-                                label={"Details"}
-                                rows={4}
-                                value={exp.content}
-                                onChange={(e) => {
-                                    const newExp = [...experience];
-                                    newExp[idx].content = e.target.value;
-                                    setExperience(newExp);
-                                }}
-                            />
-                        </Fragment>
-                    ))}
+                        <Education
+                            isActive={activeTab == "education"}
+                            educations={educations}
+                            setEducations={setEducations}
+                            addNewEducation={addNewEducation}
+                            deleteEducation={deleteEducation}
+                        />
 
-                    <button onClick={addNewExpField}>Add Experience</button>
+                        <Skills
+                            isActive={activeTab == "skills"}
+                            skills={skills}
+                            setSkills={setSkills}
+                        />
 
-                    <h3>Projects</h3>
-                    {projects.map((project, idx) => (
-                        <Fragment key={idx}>
-                            <InputGroup>
-                                <InputField
-                                    type={"text"}
-                                    label={"Name"}
-                                    placeholder={"Uncool Name"}
-                                    value={project.name}
-                                    onChange={(e) => {
-                                        const newProjects = [...projects];
-                                        newProjects[idx].name = e.target.value;
-                                        setProjects(newProjects);
-                                    }}
-                                />
-                                <InputField
-                                    type={"text"}
-                                    label={"Tools"}
-                                    placeholder={"Some uncool tools"}
-                                    value={project.tools}
-                                    onChange={(e) => {
-                                        const newProjects = [...projects];
-                                        newProjects[idx].tools = e.target.value;
-                                        setProjects(newProjects);
-                                    }}
-                                />
-                            </InputGroup>
-                            <InputGroup>
-                                <InputField
-                                    type={"text"}
-                                    label={"Link"}
-                                    placeholder={"Live Link"}
-                                    value={project.link}
-                                    onChange={(e) => {
-                                        const newProjects = [...projects];
-                                        newProjects[idx].link = e.target.value;
-                                        setProjects(newProjects);
-                                    }}
-                                />
-                                <InputField
-                                    type={"text"}
-                                    label={"GitHub"}
-                                    placeholder={"GitHub Repo Link"}
-                                    value={project.github}
-                                    onChange={(e) => {
-                                        const newProjects = [...projects];
-                                        newProjects[idx].github =
-                                            e.target.value;
-                                        setProjects(newProjects);
-                                    }}
-                                />
-                            </InputGroup>
-                            <TextField
-                                label={"Details"}
-                                rows={4}
-                                value={project.content}
-                                onChange={(e) => {
-                                    const newProjects = [...projects];
-                                    newProjects[idx].content = e.target.value;
-                                    setProjects(newProjects);
-                                }}
-                            />
-                        </Fragment>
-                    ))}
+                        <Experience
+                            isActive={activeTab == "experience"}
+                            experience={experience}
+                            setExperience={setExperience}
+                            deleteExperience={deleteExperience}
+                            addNewExpField={addNewExpField}
+                        />
 
-                    <button onClick={addNewProjectsField}>Add Project</button>
+                        <Projects
+                            isActive={activeTab == "projects"}
+                            projects={projects}
+                            setProjects={setProjects}
+                            addNewProjectsField={addNewProjectsField}
+                        />
+                    </div>
                 </div>
                 <Resume
                     fullName={fullName}
