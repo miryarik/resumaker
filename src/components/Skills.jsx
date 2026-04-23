@@ -1,5 +1,11 @@
 import TextField from "./TextField";
 
+const placeholders = [
+    "JavaScript, Ruby, Java, SQL",
+    "Vite, React.js, Jest, Git",
+    "Test Driven Development, Data Structures, Algorithms",
+];
+
 const Skills = ({ isActive, skills, setSkills }) => {
     return (
         <>
@@ -12,6 +18,7 @@ const Skills = ({ isActive, skills, setSkills }) => {
                             key={idx}
                             label={section.label}
                             value={section.items}
+                            placeholder={placeholders[idx]}
                             onChange={(e) => {
                                 const newSkills = [...skills];
                                 newSkills[idx].items = e.target.value;

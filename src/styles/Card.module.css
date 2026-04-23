@@ -1,0 +1,45 @@
+.entry {
+    background-color: var(--card-bg);
+    border: var(--input-border);
+    border-radius: 10px;
+    padding: var(--mid-space) calc(2 * var(--mid-space));
+    margin: calc(2 * var(--mid-space)) 0;
+}
+
+.actions {
+    display: flex;
+    justify-content: end;
+}
+
+.deleteButton {
+    font-size: small;
+    background-color: rgba(255, 0, 0, 0.697);
+    color: white;
+    padding: 4px;
+    border-radius: 8px;
+    border: none;
+
+    &:hover {
+        cursor: pointer;
+        background-color: red;
+    }
+}
+
+.addButton {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    align-items: center;
+    font-size: medium;
+    background-color: rgba(0, 110, 255, 0.6);
+    color: white;
+    padding: 4px;
+    margin: auto;
+    border-radius: 8px;
+    border: none;
+
+    &:hover {
+        cursor: pointer;
+        background-color: rgb(0, 120, 255);
+    }
+}

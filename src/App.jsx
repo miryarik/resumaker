@@ -163,9 +163,21 @@ function App() {
         setExperience(newExperience);
     }
 
+    function deleteProject(idx) {
+        const newProjects = [...projects];
+        if (newProjects.length > 1) newProjects.splice(idx, 1);
+        setProjects(newProjects);
+    }
+
+    function toggleInputs() {
+        document.querySelector(".inputs").style.display != "none"
+            ? (document.querySelector(".inputs").style.display = "none")
+            : (document.querySelector(".inputs").style.display = "block");
+    }
+
     return (
         <>
-            <Navbar />
+            <Navbar toggleInputs={toggleInputs} />
             <main>
                 <div className="inputs">
                     <div className="input-tabs">
@@ -212,6 +224,7 @@ function App() {
                             isActive={activeTab == "projects"}
                             projects={projects}
                             setProjects={setProjects}
+                            deleteProject={deleteProject}
                             addNewProjectsField={addNewProjectsField}
                         />
                     </div>

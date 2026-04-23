@@ -6,6 +6,11 @@
 
   .input-fields {
     padding: 20px;
+
+    h3 {
+      margin-bottom: calc(2 * var(--mid-space));
+    }
+
   }
 
   .input-tabs {
@@ -13,10 +18,8 @@
     display: flex;
     top: 0;
     left: 0;
-
-    .active {
-      background-color: rgb(111, 111, 111);
-    }
+    /* background-color: var(--card-bg); */
+    background-color: rgb(45, 45, 45);
 
     button {
       display: flex;
@@ -26,9 +29,19 @@
       outline: none;
       gap: 8px;
       flex: 1;
-
-      background-color: var(--input-bg);
+      background-color: transparent;
       color: white;
+
+      &:hover {
+        cursor: pointer;
+        ;
+      }
+
+
+      &.active {
+        background-color: var(--app-bg);
+        border-radius: 10px 10px 0 0;
+      }
     }
   }
 }

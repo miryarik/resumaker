@@ -18,7 +18,7 @@ const TextField = ({
                 onChange={onChange || ((e) => setValue(e.target.value))}
                 id={id}
                 placeholder={placeholder}
-                maxLength={350}
+                maxLength={500}
                 rows={rows || 6}
             />
         </label>

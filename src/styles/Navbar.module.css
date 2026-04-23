@@ -6,6 +6,32 @@
   justify-content: space-between;
   align-items: center;
   color: white;
+
+  div {
+    display: flex;
+    align-items: center;
+    gap: var(--mid-space);
+
+    button {
+      color: white;
+      padding: 0;
+      background-color: transparent;
+      height: 36px;
+      border: none;
+      outline: none;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      svg {
+        height: 36px;
+        width: 36px;
+      }
+    }
+
+    ;
+  }
 }
 
 #PrintButton {
@@ -20,4 +46,9 @@
   outline: none;
 
   cursor: pointer;
+
+  display: flex;
+  padding: 2px var(--mid-space);
+  gap: var(--mid-space);
+  align-items: center;
 }
