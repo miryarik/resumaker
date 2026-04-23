@@ -19,7 +19,10 @@ const Navbar = ({ toggleInputs }) => {
                         />
                     </svg>
                 </button>
-                <h1>Resumaker</h1>
+                <div className={styles.brand}>
+                    <img src="/resumaker.png" alt="logo" />
+                    <h1>esumaker</h1>
+                </div>
             </div>
             <button id={styles.PrintButton} onClick={() => window.print()}>
                 <svg
