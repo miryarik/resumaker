@@ -8,3 +8,9 @@ export function getBullets(text) {
             return p.trim();
         });
 }
+
+export function withProtocol(url) {
+    // links are often typed without a scheme, e.g. "github.com/john"
+    const trimmed = url.trim();
+    return /^[a-z][a-z0-9+.-]*:/i.test(trimmed) ? trimmed : "https://" + trimmed;
+}

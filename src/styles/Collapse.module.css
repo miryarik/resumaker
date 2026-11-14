@@ -1,0 +1,44 @@
+.Collapse {
+  display: grid;
+  grid-template-rows: 1fr;
+
+  .inner {
+    min-height: 0;
+    overflow: hidden;
+  }
+}
+
+.appearing {
+  animation: open 260ms var(--ease-out) both;
+}
+
+.leaving {
+  animation: close 220ms var(--ease-in-out) both;
+  pointer-events: none;
+}
+
+@keyframes open {
+  from {
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes close {
+  from {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+
+  to {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+}

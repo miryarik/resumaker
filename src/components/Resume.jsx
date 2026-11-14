@@ -1,5 +1,6 @@
+import { useLayoutEffect, useRef, useState } from "react";
 import styles from "../styles/Resume.module.css";
-import { getBullets } from "../utils";
+import { getBullets, withProtocol } from "../utils";
 import ResumeHeading from "./ResumeHeading";
 import {
     Content,
@@ -9,22 +10,40 @@ import {
     SubHeading,
 } from "./ResumeSection";
 
-getBullets;
+// A4 width in CSS px (21cm @ 96dpi)
+const SHEET_WIDTH = (21 * 96) / 2.54;
 
-const Resume = ({
-    fullName,
-    designation,
-    location,
-    phone,
-    email,
-    github,
-    linkedin,
-    summary,
-    educations,
-    skills,
-    experience,
-    projects,
-}) => {
+// Shrinks the sheet to fit narrow containers (never enlarges it).
+function useFitScale(containerRef, gutter) {
+    const [scale, setScale] = useState(1);
+    useLayoutEffect(() => {
+        const el = containerRef.current;
+        if (!el) return;
+        const ro = new ResizeObserver(([entry]) => {
+            const available = entry.contentRect.width - 2 * gutter;
+            setScale(Math.min(1, Math.max(0.2, available / SHEET_WIDTH)));
+        });
+        ro.observe(el);
+        return () => ro.disconnect();
+    }, [containerRef, gutter]);
+    return scale;
+}
+
+const Resume = ({ data, hidden }) => {
+    const { educations, skills, experience, projects } = data;
+    const {
+        fullName,
+        designation,
+        location,
+        phone,
+        email,
+        github,
+        linkedin,
+        summary,
+    } = data.basic;
+
+    const containerRef = useRef(null);
+    const scale = useFitScale(containerRef, 16);
     const contactInfo = [
         {
             value: location,
@@ -51,7 +70,7 @@ const Resume = ({
                     viewBox="0 0 16 16"
                 >
                     <path
-                        fill-rule="evenodd"
+                        fillRule="evenodd"
                         d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"
                     />
                 </svg>
@@ -107,8 +126,12 @@ const Resume = ({
     ];
 
     return (
-        <div className={styles.ResumeContainer}>
-            <div className={styles.Resume}>
+        <div
+            className={styles.ResumeContainer}
+            ref={containerRef}
+            aria-hidden={hidden || undefined}
+        >
+            <div className={styles.Resume} style={{ zoom: scale }}>
                 <ResumeHeading
                     fullName={fullName}
                     designation={designation}
@@ -125,12 +148,12 @@ const Resume = ({
                     </ResumeSection>
                 )}
 
-                {educations[0].institute && (
+                {educations.some((e) => e.institute) && (
                     <ResumeSection>
                         <Heading>Education</Heading>
                         <Content>
-                            {educations.map((education, idx) => (
-                                <div key={idx}>
+                            {educations.map((education) => (
+                                <div key={education.id}>
                                     <SubHeading>{education.course}</SubHeading>
                                     <p>{education.institute}</p>
                                     <Side>
@@ -149,12 +172,12 @@ const Resume = ({
                     </ResumeSection>
                 )}
 
-                {(skills[0].items || skills[1].items || skills[2].items) && (
+                {skills.some((s) => s.items) && (
                     <ResumeSection>
-                        <Heading>Techinal Skills</Heading>
+                        <Heading>Technical Skills</Heading>
                         <Content>
-                            {skills.map((skill, idx) => (
-                                <p key={idx}>
+                            {skills.map((skill) => (
+                                <p key={skill.id}>
                                     <strong>
                                         {skill.items ? skill.label + ":" : ""}
                                     </strong>{" "}
@@ -165,12 +188,12 @@ const Resume = ({
                     </ResumeSection>
                 )}
 
-                {experience[0].company && (
+                {experience.some((e) => e.company) && (
                     <ResumeSection>
                         <Heading>Experience</Heading>
                         <Content>
-                            {experience.map((exp, idx) => (
-                                <div key={idx}>
+                            {experience.map((exp) => (
+                                <div key={exp.id}>
                                     <SubHeading>{exp.designation}</SubHeading>
                                     <p>{exp.company}</p>
                                     <ul>
@@ -192,12 +215,12 @@ const Resume = ({
                     </ResumeSection>
                 )}
 
-                {projects[0].name && (
+                {projects.some((p) => p.name) && (
                     <ResumeSection>
                         <Heading>Projects</Heading>
                         <Content>
-                            {projects.map((project, idx) => (
-                                <div key={idx}>
+                            {projects.map((project) => (
+                                <div key={project.id}>
                                     <SubHeading>{project.name}</SubHeading>
                                     <p>{project.tools}</p>
                                     <ul>
@@ -208,40 +231,53 @@ const Resume = ({
                                         )}
                                     </ul>
                                     <Side>
-                                        <a hrek={project.link} target="_blank">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="16"
-                                                height="16"
-                                                fill="currentColor"
-                                                viewBox="0 0 16 16"
+                                        {project.link && (
+                                            <a
+                                                href={withProtocol(
+                                                    project.link,
+                                                )}
+                                                target="_blank"
+                                                rel="noreferrer"
                                             >
-                                                <path
-                                                    fill-rule="evenodd"
-                                                    d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5"
-                                                />
-                                                <path
-                                                    fill-rule="evenodd"
-                                                    d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0z"
-                                                />
-                                            </svg>
-                                            Live
-                                        </a>
-                                        <a
-                                            href={project.github}
-                                            target="_blank"
-                                        >
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="16"
-                                                height="16"
-                                                fill="currentColor"
-                                                viewBox="0 0 16 16"
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="16"
+                                                    height="16"
+                                                    fill="currentColor"
+                                                    viewBox="0 0 16 16"
+                                                >
+                                                    <path
+                                                        fillRule="evenodd"
+                                                        d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5"
+                                                    />
+                                                    <path
+                                                        fillRule="evenodd"
+                                                        d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0z"
+                                                    />
+                                                </svg>
+                                                Live
+                                            </a>
+                                        )}
+                                        {project.github && (
+                                            <a
+                                                href={withProtocol(
+                                                    project.github,
+                                                )}
+                                                target="_blank"
+                                                rel="noreferrer"
                                             >
-                                                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8" />
-                                            </svg>
-                                            GitHub
-                                        </a>
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="16"
+                                                    height="16"
+                                                    fill="currentColor"
+                                                    viewBox="0 0 16 16"
+                                                >
+                                                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8" />
+                                                </svg>
+                                                GitHub
+                                            </a>
+                                        )}
                                     </Side>
                                 </div>
                             ))}

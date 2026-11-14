@@ -23,3 +23,9 @@
     color: white;
   }
 }
+@media (max-width: 900px) {
+  .InputField {
+    /* wrap onto a new line on phones instead of getting cramped */
+    min-width: min(100%, 170px);
+  }
+}

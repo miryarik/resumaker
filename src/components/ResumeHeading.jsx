@@ -1,4 +1,5 @@
 import styles from "../styles/ResumeHeading.module.css";
+import { withProtocol } from "../utils";
 const ResumeHeading = ({ fullName, designation, contactInfo, linkInfo }) => {
     return (
         <div className={styles.Heading}>
@@ -26,7 +27,7 @@ const HeadingInfo = ({ infoList }) => {
                             {item.icon}
 
                             {linkMode ? (
-                                <a href={"https://" + item.value}>
+                                <a href={withProtocol(item.value)}>
                                     {item.label}
                                 </a>
                             ) : (

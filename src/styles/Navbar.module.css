@@ -1,50 +1,52 @@
 .Navbar {
+  flex-shrink: 0;
   padding: 4px 10px;
   border-bottom: var(--main-border);
-  height: 60px;
+  height: var(--nav-height);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: var(--mid-space);
   color: white;
+  position: relative;
+  z-index: 10;
+}
 
-  div {
-    display: flex;
-    align-items: center;
-    gap: var(--mid-space);
+.left,
+.right {
+  display: flex;
+  align-items: center;
+  gap: var(--mid-space);
+  min-width: 0;
+}
 
-    .brand {
-      gap: 2px;
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 2px;
 
-      img {
-        justify-self: end;
-        height: 36px;
-      }
-    }
+  img {
+    height: 36px;
+  }
+}
 
-    button {
-      color: white;
-      padding: 0;
-      background-color: transparent;
-      height: 36px;
-      border: none;
-      outline: none;
+.menuButton {
+  color: white;
+  padding: 0;
+  background-color: transparent;
+  height: 36px;
+  border: none;
+  outline: none;
+  cursor: pointer;
 
-      &:hover {
-        cursor: pointer;
-      }
-
-      svg {
-        height: 36px;
-        width: 36px;
-      }
-    }
-
-    ;
+  svg {
+    height: 36px;
+    width: 36px;
   }
 }
 
 #PrintButton {
-
+  flex-shrink: 0;
   font-size: 14px;
   font-weight: bold;
 
@@ -60,4 +62,23 @@
   padding: 2px var(--mid-space);
   gap: var(--mid-space);
   align-items: center;
+  height: 30px;
+}
+
+@media (max-width: 900px) {
+
+  /* the editor / preview switch replaces the panel toggle on small screens */
+  .menuButton {
+    display: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .brand h1 {
+    display: none;
+  }
+
+  .printLabel {
+    display: none;
+  }
 }
