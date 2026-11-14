@@ -1,3 +1,5 @@
+import { DEFAULT_FONT, FONT_SIZE, FONTS } from "./fonts";
+
 // Shape of a resume and helpers to create / validate one.
 // Everything that is saved, exported or imported goes through `normalizeResume`
 // so the rest of the app can trust the shape.
@@ -32,8 +34,29 @@ export function blankEntry(section) {
     return entry;
 }
 
+export function defaultStyle() {
+    return { font: DEFAULT_FONT, fontSize: FONT_SIZE.default };
+}
+
+function normalizeStyle(raw) {
+    const style = defaultStyle();
+    if (!isObj(raw)) return style;
+    if (FONTS.some((f) => f.id === raw.font)) style.font = raw.font;
+    const size = Number(raw.fontSize);
+    if (Number.isFinite(size))
+        style.fontSize = Math.min(
+            FONT_SIZE.max,
+            Math.max(
+                FONT_SIZE.min,
+                Math.round(size / FONT_SIZE.step) * FONT_SIZE.step,
+            ),
+        );
+    return style;
+}
+
 export function blankResume() {
     return {
+        style: defaultStyle(),
         basic: Object.fromEntries(BASIC_FIELDS.map((f) => [f, ""])),
         educations: [blankEntry("educations")],
         skills: DEFAULT_SKILL_LABELS.map((label) => ({
@@ -50,6 +73,7 @@ export function blankResume() {
 export function sampleResume() {
     const withIds = (list) => list.map((item) => ({ id: uid(), ...item }));
     return {
+        style: defaultStyle(),
         basic: {
             fullName: "Your Name",
             designation: "Your Designation",
@@ -118,13 +142,11 @@ function normalizeEntries(section, list) {
 }
 
 function normalizeSkills(list) {
-    const skills = (Array.isArray(list) ? list : [])
-        .filter(isObj)
-        .map((s) => ({
-            id: str(s.id) || uid(),
-            label: str(s.label),
-            items: str(s.items),
-        }));
+    const skills = (Array.isArray(list) ? list : []).filter(isObj).map((s) => ({
+        id: str(s.id) || uid(),
+        label: str(s.label),
+        items: str(s.items),
+    }));
     return skills.length ? skills : blankResume().skills;
 }
 
@@ -143,6 +165,7 @@ export function normalizeResume(raw) {
         });
 
     return {
+        style: normalizeStyle(src.style),
         basic: Object.fromEntries(
             BASIC_FIELDS.map((f) => [f, str(basicSrc[f])]),
         ),
@@ -182,6 +205,7 @@ export function toExportJSON(name, data) {
             name,
             exportedAt: new Date().toISOString(),
             resume: {
+                style: data.style,
                 basic: data.basic,
                 educations: strip(data.educations),
                 skills: strip(data.skills),
