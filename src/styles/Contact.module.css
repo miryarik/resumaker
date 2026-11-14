@@ -1,0 +1,23 @@
+.message {
+    color: white;
+    font-size: var(--input-fs);
+    margin: var(--mid-space) 0 calc(1.5 * var(--mid-space));
+}
+
+.link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--mid-space);
+    margin-bottom: var(--mid-space);
+    font-size: var(--input-fs);
+    color: white;
+    text-decoration: none;
+    background-color: var(--input-bg);
+    border: var(--input-border);
+    border-radius: 6px;
+    padding: 4px 10px;
+
+    &:hover {
+        background-color: rgb(45, 45, 45);
+    }
+}

@@ -7,12 +7,20 @@ import { Education } from "./components/Education";
 import Skills from "./components/Skills";
 import { Experience } from "./components/Experience";
 import Projects from "./components/Projects";
+import Contact from "./components/Contact";
 import { EyeIcon, PencilIcon } from "./components/Icons";
 import ResumeToolbar from "./components/ResumeToolbar";
 import useResumeLibrary from "./lib/useResumeLibrary";
 import useMediaQuery, { MOBILE_QUERY } from "./lib/useMediaQuery";
 
-const inputTabs = ["basic", "education", "skills", "experience", "projects"];
+const inputTabs = [
+    "basic",
+    "education",
+    "skills",
+    "experience",
+    "projects",
+    "contact",
+];
 
 function App() {
     const library = useResumeLibrary();
@@ -134,6 +142,7 @@ function App() {
                                     setProjects={set.projects}
                                 />
                             )}
+                            {activeTab == "contact" && <Contact />}
                         </div>
                     </div>
                 </aside>
