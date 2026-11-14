@@ -22,20 +22,52 @@
   --card-bg: rgb(35, 35, 35);
   --input-bg: rgb(30, 30, 30);
   --input-border: rgb(70, 70, 70) 1px solid;
+  --focus-border: rgb(130, 130, 130);
   --app-bg: rgb(20, 20, 20);
+  --muted-fg: rgb(150, 150, 150);
+  --accent: rgba(0, 110, 255, 0.6);
+  --accent-strong: rgb(0, 120, 255);
+  --danger: rgba(255, 0, 0, 0.697);
+  --danger-strong: red;
 
   /* typography */
   --input-fs: 14px;
 
+  /* motion */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+body {
+  background-color: var(--app-bg);
 }
 
 #root {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  height: 100dvh;
   background-color: var(--app-bg);
   scrollbar-color: gray rgb(62, 62, 62);
   scrollbar-width: thin;
+}
+
+@media (max-width: 900px) {
+  :root {
+    /* 16px+ stops iOS from zooming into focused fields */
+    --input-fs: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  /* near-zero rather than none so animationend still fires */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+  }
 }
 
 @media print {

@@ -6,29 +6,28 @@ const placeholders = [
     "Test Driven Development, Data Structures, Algorithms",
 ];
 
-const Skills = ({ isActive, skills, setSkills }) => {
+const Skills = ({ skills, setSkills }) => {
     return (
-        <>
-            {isActive && (
-                <div className="input-skills">
-                    <h3>Skills and Technologies</h3>
-                    {skills.map((section, idx) => (
-                        <TextField
-                            rows={2}
-                            key={idx}
-                            label={section.label}
-                            value={section.items}
-                            placeholder={placeholders[idx]}
-                            onChange={(e) => {
-                                const newSkills = [...skills];
-                                newSkills[idx].items = e.target.value;
-                                setSkills(newSkills);
-                            }}
-                        />
-                    ))}
-                </div>
-            )}
-        </>
+        <div className="input-skills">
+            <h3>Skills and Technologies</h3>
+            {skills.map((section, idx) => (
+                <TextField
+                    rows={2}
+                    key={section.id}
+                    label={section.label}
+                    value={section.items}
+                    placeholder={placeholders[idx]}
+                    onChange={(e) => {
+                        const items = e.target.value;
+                        setSkills((list) =>
+                            list.map((s) =>
+                                s.id === section.id ? { ...s, items } : s,
+                            ),
+                        );
+                    }}
+                />
+            ))}
+        </div>
     );
 };
 
