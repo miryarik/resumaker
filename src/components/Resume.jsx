@@ -1,6 +1,7 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import styles from "../styles/Resume.module.css";
 import { getBullets, withProtocol } from "../utils";
+import { getFont, loadFont } from "../lib/fonts";
 import ResumeHeading from "./ResumeHeading";
 import {
     Content,
@@ -41,6 +42,9 @@ const Resume = ({ data, hidden }) => {
         linkedin,
         summary,
     } = data.basic;
+
+    const font = getFont(data.style.font);
+    useEffect(() => loadFont(font), [font]);
 
     const containerRef = useRef(null);
     const scale = useFitScale(containerRef, 16);
@@ -131,7 +135,14 @@ const Resume = ({ data, hidden }) => {
             ref={containerRef}
             aria-hidden={hidden || undefined}
         >
-            <div className={styles.Resume} style={{ zoom: scale }}>
+            <div
+                className={styles.Resume}
+                style={{
+                    zoom: scale,
+                    fontFamily: font.family,
+                    "--content-fs": `${data.style.fontSize}px`,
+                }}
+            >
                 <ResumeHeading
                     fullName={fullName}
                     designation={designation}

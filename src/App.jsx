@@ -8,6 +8,7 @@ import Skills from "./components/Skills";
 import { Experience } from "./components/Experience";
 import Projects from "./components/Projects";
 import { EyeIcon, PencilIcon } from "./components/Icons";
+import ResumeToolbar from "./components/ResumeToolbar";
 import useResumeLibrary from "./lib/useResumeLibrary";
 import useMediaQuery, { MOBILE_QUERY } from "./lib/useMediaQuery";
 
@@ -36,6 +37,7 @@ function App() {
     const set = useMemo(() => {
         const make = (section) => (value) => updateSection(section, value);
         return {
+            style: make("style"),
             basic: make("basic"),
             educations: make("educations"),
             skills: make("skills"),
@@ -136,6 +138,7 @@ function App() {
                     </div>
                 </aside>
                 <section className="preview">
+                    <ResumeToolbar style={data.style} setStyle={set.style} />
                     <Resume
                         data={data}
                         hidden={isMobile && mobileView !== "preview"}
